@@ -25,9 +25,6 @@ jobs:
       - name: Install Dependencies and Run Tests
         run: npm ci && npm test
 
-      - name: Start Application
-        run: npm start
-
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
