@@ -23,8 +23,13 @@ jobs:
       - name: Load Environment Variables
         run: echo "$MY_ENV_VARS" >> .env
 
-      - name: Install Dependencies and Build
-        run: npm ci && npm test && npm run build
+      - name: Install Dependencies and Test
+        run: |
+          npm ci
+          npm test
+
+      - name: Start Application
+        run: npm start
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
