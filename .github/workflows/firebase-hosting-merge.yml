@@ -2,17 +2,31 @@
 # https://github.com/firebase/firebase-tools
 
 name: Deploy to Firebase Hosting on merge
-'on':
+
+on:
   push:
     branches:
       - main
+
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+
+    env:
+      MY_ENV_VARS: ${{ secrets.MY_ENV_VARS }}
+
     steps:
-      - uses: actions/checkout@v3
-      - run: npm ci && npm test && npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Load Environment Variables
+        run: echo "$MY_ENV_VARS" >> .env
+
+      - name: Install Dependencies and Build
+        run: npm ci && npm test && npm run build
+
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_FORUM_API_E4FD4 }}'
