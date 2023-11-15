@@ -30,4 +30,3 @@ jobs:
           source_branch: main
           destination_repo: https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           destination_branch: master
-          always: success()
