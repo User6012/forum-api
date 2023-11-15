@@ -61,7 +61,7 @@ describe('/threads/{threadId}/comments/{commentId}/likes endpoint', () => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-
+      console.log(response)
       // Assert
       const responseJson = JSON.parse(response.payload);
       expect(response.statusCode).toEqual(404);

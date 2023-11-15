@@ -11,6 +11,7 @@ const replies = require('../../Interfaces/http/api/replies');
 const likes = require('../../Interfaces/http/api/likes');
 
 const createServer = async (container) => {
+  const isTestEnvironment = process.env.NODE_ENV === 'test';
   const server = Hapi.server({
     host: process.env.HOST,
     port: process.env.PORT,
@@ -18,6 +19,23 @@ const createServer = async (container) => {
 
   await server.register([
     { plugin: Jwt },
+    ...(isTestEnvironment
+      ? []
+      : [
+        {
+          plugin: HapiRateLimit,
+          options: {
+            userLimit: 1,
+            userCache: {
+              expiresIn: 60000,
+            },
+            pathLimit: 1,
+            pathCache: {
+              expiresIn: 60000,
+            },
+          },
+        },
+      ]),
   ]);
 
   // define JWT auth strategy
@@ -36,19 +54,7 @@ const createServer = async (container) => {
       },
     }),
   });
-  await server.register({
-    plugin: HapiRateLimit,
-    options: {
-      userLimit: 90,
-      userCache: {
-        expiresIn: 60000,
-      },
-      pathLimit: 90,
-      pathCache: {
-        expiresIn: 60000,
-      },
-    },
-  });
+
   await server.register([
     {
       plugin: users,
@@ -119,6 +125,10 @@ const createServer = async (container) => {
     // jika bukan error, lanjutkan dengan response sebelumnya (tanpa terintervensi)
     return h.continue;
   });
+
+  // await server.register({
+
+  // });
 
   return server;
 };
