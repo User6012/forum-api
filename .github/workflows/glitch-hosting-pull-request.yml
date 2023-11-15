@@ -1,0 +1,31 @@
+name: Deploy to Firebase Hosting on PR
+
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  build_and_deploy:
+    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
+    runs-on: ubuntu-latest
+    env:
+      MY_ENV_VARS: ${{ secrets.MY_ENV_VARS }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Load Environment Variables
+        run: echo "$MY_ENV_VARS" >> .env
+
+      - name: Install Dependencies and Test
+        run: |
+          npm ci
+          npm test
+
+      - name: Deploy to Glitch Project
+        uses: wei/git-sync@v3
+        with:
+          source_repo: https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          source_branch: main
+          destination_repo: ${{ secrets.GLITCH_GIT_URL }}
+          destination_branch: master
