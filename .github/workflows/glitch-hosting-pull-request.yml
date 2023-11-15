@@ -22,18 +22,18 @@ jobs:
           npm ci
           npm test
 
-      - name: Deploy to Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.token }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_FORUM_API_E4FD4 }}'
-          channelId: live
-          projectId: forum-api-e4fd4
+      # - name: Deploy to Firebase Hosting
+      #   uses: FirebaseExtended/action-hosting-deploy@v0
+      #   with:
+      #     repoToken: '${{ secrets.token }}'
+      #     firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_FORUM_API_E4FD4 }}'
+      #     channelId: live
+      #     projectId: forum-api-e4fd4
 
-      - name: Deploy to Glitch Project
-        uses: wei/git-sync@v3
-        with:
-          source_repo: https://${{ secrets.token }}@github.com/${{ github.repository }}.git
-          source_branch: main
-          destination_repo: ${{ secrets.GLITCH_GIT_URL }}
-          destination_branch: master
+      # - name: Deploy to Glitch Project
+      #   uses: wei/git-sync@v3
+      #   with:
+      #     source_repo: https://${{ secrets.token }}@github.com/${{ github.repository }}.git
+      #     source_branch: main
+      #     destination_repo: ${{ secrets.GLITCH_GIT_URL }}
+      #     destination_branch: master
