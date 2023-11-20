@@ -18,24 +18,24 @@ const createServer = async (container) => {
   });
 
   await server.register([
-    { plugin: Jwt },
     ...(isTestEnvironment
       ? []
       : [
         {
           plugin: HapiRateLimit,
           options: {
+            enabled: true,
             userLimit: 90,
             userCache: {
               expiresIn: 60000,
             },
-            pathLimit: 90,
-            pathCache: {
-              expiresIn: 60000,
-            },
+            addressOnly: true,
+            ignorePathParams: true,
           },
         },
       ]),
+    { plugin: Jwt },
+
   ]);
 
   // define JWT auth strategy

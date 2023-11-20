@@ -6,7 +6,9 @@ const routes = (handler) => ([
     options: {
       auth: 'forum_jwt',
       plugins: {
-        'hapi-rate-limit': {},
+        'hapi-rate-limit': {
+          enabled: true,
+        },
       },
     },
   },
