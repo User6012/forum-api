@@ -5,9 +5,6 @@ const routes = (handler) => ([
     handler: handler.postReplyHandler,
     options: {
       auth: 'forum_jwt',
-      plugins: {
-        'hapi-rate-limit': {},
-      },
     },
   },
   {
@@ -16,9 +13,6 @@ const routes = (handler) => ([
     handler: handler.deleteReplyByIdHandler,
     options: {
       auth: 'forum_jwt',
-      plugins: {
-        'hapi-rate-limit': {},
-      },
     },
   },
 ]);

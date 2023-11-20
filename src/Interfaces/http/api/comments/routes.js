@@ -5,9 +5,6 @@ const routes = (handler) => ([
     handler: handler.postCommentHandler,
     options: {
       auth: 'forum_jwt',
-      plugins: {
-        'hapi-rate-limit': {},
-      },
     },
   },
   {
@@ -16,9 +13,6 @@ const routes = (handler) => ([
     handler: handler.deleteCommentByIdHandler,
     options: {
       auth: 'forum_jwt',
-      plugins: {
-        'hapi-rate-limit': {},
-      },
     },
   },
 ]);
